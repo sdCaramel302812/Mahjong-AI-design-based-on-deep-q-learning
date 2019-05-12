@@ -20,6 +20,7 @@ class Player:
         self.card.reset()
         self.info.rin_shan = False
         self.info.chan_kan = 0
+        self.info.update_reward = True
 
     def new_game(self, id):
         self.id = id

@@ -70,6 +70,30 @@ class Game:
         self.first_oya = self.oya + 1
         if self.first_oya > 3:
             self.first_oya = 0
+
+    def restart_game(self):
+        self.reset()
+        self.card_stack.reset(self.red_number)
+        self.game_log = Log()
+
+        self.pl.append(Player())
+        self.pl.append(Player())
+        self.pl.append(Player())
+        self.pl.append(Player())
+        self.pl[0].id = 1
+        self.pl[1].id = 2
+        self.pl[2].id = 3
+        self.pl[3].id = 4
+
+        self.oya = random.randint(0, 3)
+        self.first_oya = self.oya + 1
+        if self.first_oya > 3:
+            self.first_oya = 0
+
+        self.chan_fon = 30
+        kyouku_over = True
+        self.end = True
+
     
     def reset(self):
         self.card_stack.reset(self.red_number)
@@ -418,34 +442,39 @@ class Game:
                 # if some body win
                 if self.winner != -1:
                     point = point_check(self.pl[self.winner].card, self.chan_fon, self.pl[self.winner].info.men_fon, self.pl[self.winner].info.last, self.pl[self.winner].info.first, self.pl[self.winner].info.rin_shan, self.pl[self.winner].info.chan_kan, self.pl[self.winner].info.i_ba_tsu, self.red_number, self.card_stack.get_dora, self.card_stack.get_uradora)
+                    self.pl[self.winner].info.update_reward = True
+                    self.pl[self.winner].info.reward = point.point
+                    print(point.point)
                     if self.is_tsumo:
-                        self.pl[self.winner].info.point += point + 300 * self.honba + 1000 * self.kyoutaku
+                        self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
                         for i in range(0, 3):
                             if self.pl[self.winner].info.men_fon == 30:
-                                self.pl[self.find_next_player(i + 1)].info.point -= point / 3 + 100 * self.honba
+                                self.pl[self.find_next_player(i + 1)].info.point -= point.point / 3 + 100 * self.honba
                             else :
                                 if self.pl[self.find_next_player(i + 1)].info.men_fon == 30:
-                                    self.pl[self.find_next_player(i + 1)].info.point -= point / 2 + 100 * self.honba
+                                    self.pl[self.find_next_player(i + 1)].info.point -= point.point / 2 + 100 * self.honba
                                 else :
-                                    self.pl[self.find_next_player(i + 1)].info.point -= point / 4 + 100 * self.honba
+                                    self.pl[self.find_next_player(i + 1)].info.point -= point.point / 4 + 100 * self.honba
                     else :
-                        self.pl[self.winner].info.point += point + 300 * self.honba + 1000 * self.kyoutaku
-                        self.pl[self.loser].info.point -= point + 300 * self.honba
+                        self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
+                        self.pl[self.loser].info.point -= point.point + 300 * self.honba
                     if self.winner2 != -1:
                         point = point_check(self.pl[self.winner2].card, self.chan_fon, self.pl[self.winner2].info.men_fon, self.pl[self.winner2].info.last, self.pl[self.winner2].info.first, self.pl[self.winner2].info.rin_shan, self.pl[self.winner2].info.chan_kan, self.pl[self.winner2].info.i_ba_tsu, self.red_number, self.card_stack.get_dora, self.card_stack.get_uradora)
+                        self.pl[self.winner2].info.update_reward = True
+                        self.pl[self.winner2].info.reward = point.point
                         if self.is_tsumo:
-                            self.pl[self.winner2].info.point += point + 300 * self.honba + 1000 * self.kyoutaku
+                            self.pl[self.winner2].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
                             for i in range(0, 3):
                                 if self.pl[self.winner2].info.men_fon == 30:
-                                    self.pl[self.find_next_player(i + 1)].info.point -= point / 3 + 100 * self.honba
+                                    self.pl[self.find_next_player(i + 1)].info.point -= point.point / 3 + 100 * self.honba
                                 else :
                                     if self.pl[self.find_next_player(i + 1)].info.men_fon == 30:
-                                        self.pl[self.find_next_player(i + 1)].info.point -= point / 2 + 100 * self.honba
+                                        self.pl[self.find_next_player(i + 1)].info.point -= point.point / 2 + 100 * self.honba
                                     else :
-                                        self.pl[self.find_next_player(i + 1)].info.point -= point / 4 + 100 * self.honba
+                                        self.pl[self.find_next_player(i + 1)].info.point -= point.point / 4 + 100 * self.honba
                         else :
-                            self.pl[self.winner2].info.point += point + 300 * self.honba + 1000 * self.kyoutaku
-                            self.pl[self.loser].info.point -= point + 300 * self.honba
+                            self.pl[self.winner2].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
+                            self.pl[self.loser].info.point -= point.point + 300 * self.honba
                     self.kyoutaku = 0
 
                 else :

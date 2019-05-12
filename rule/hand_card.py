@@ -13,6 +13,7 @@ class HandCard:
         self.chi_card = []
         self.pon_card = []
         self.kan_card = []
+        self.old_s = -1
     
     richi = False
     def red_trans(self):
@@ -34,6 +35,7 @@ class HandCard:
         self.chi_card = []
         self.pon_card = []
         self.kan_card = []
+        self.old_s = -1
 
     def deal(self, card):
         self.card13 = copy.copy(card)

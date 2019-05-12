@@ -4,6 +4,9 @@ class PlayerInfo:
     want_to_richi = 0
     want_to_tsumo = False
 
+    update_reward = False
+    reward = 0
+
     end_game = False
 
     can_do_something = False
