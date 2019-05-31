@@ -62,7 +62,6 @@ class HandCard:
         self.ron_tile = card
         self.card14 = self.card13 + [card]
         self.card14.sort()
-        self.check_card14 = copy.copy(self.card14)
 
     #
     #p1 : which pai you eat

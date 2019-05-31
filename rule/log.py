@@ -37,8 +37,12 @@ class Log:
             self.pl4_name += "\t"
 
 
-    def append_game_log(self, chanfon, oya, kyouku, honba, kyoutaku, dora, uradora, start_deal, draw_stack, discard_stack, final_card):
-        self.game_log.append([chanfon, oya, kyouku, honba, kyoutaku, dora, uradora, start_deal, draw_stack, discard_stack, final_card])
+    def append_game_log(self, chanfon, oya, kyouku, honba, kyoutaku, dora, uradora, start_deal, draw_stack, discard_stack, final_card, winner, point):
+        start_deal[0].sort()
+        start_deal[1].sort()
+        start_deal[2].sort()
+        start_deal[3].sort()
+        self.game_log.append([chanfon, oya, kyouku, honba, kyoutaku, dora, uradora, start_deal, draw_stack, discard_stack, final_card, winner, point])
 
     def check_men_fon(self, oya, pl):
         where = (pl - oya) % 4
@@ -81,22 +85,27 @@ class Log:
             f.write(self.pl1_name + "\tdraw    : " + str(log[8][0]) + "\n")
             f.write("\t\t\tdiscard : " + str(log[9][0]) + "\n")
             f.write("\t\t\tfinal   : " + str(log[10][0]) + "\n")
+            f.write("point : " + str(log[12][0]) + "\n")
             f.write("---------------------------------------------------------------------------\n")
             f.write(self.check_men_fon(oya, 1) + "\tstart   : " + str(log[7][1]) + "\n")
             f.write(self.pl2_name + "\tdraw    : " + str(log[8][1]) + "\n")
             f.write("\t\t\tdiscard : " + str(log[9][1]) + "\n")
             f.write("\t\t\tfinal   : " + str(log[10][1]) + "\n")
+            f.write("point : " + str(log[12][1]) + "\n")
             f.write("---------------------------------------------------------------------------\n")
             f.write(self.check_men_fon(oya, 2) + "\tstart   : " + str(log[7][2]) + "\n")
             f.write(self.pl3_name + "\tdraw    : " + str(log[8][2]) + "\n")
             f.write("\t\t\tdiscard : " + str(log[9][2]) + "\n")
             f.write("\t\t\tfinal   : " + str(log[10][2]) + "\n")
+            f.write("point : " + str(log[12][2]) + "\n")
             f.write("---------------------------------------------------------------------------\n")
             f.write(self.check_men_fon(oya, 3) + "\tstart   : " + str(log[7][3]) + "\n")
             f.write(self.pl4_name + "\tdraw    : " + str(log[8][3]) + "\n")
             f.write("\t\t\tdiscard : " + str(log[9][3]) + "\n")
             f.write("\t\t\tfinal   : " + str(log[10][3]) + "\n")
+            f.write("point : " + str(log[12][3]) + "\n")
             f.write("\n")
+            f.write("winner : " + str(log[11]) + "\n")
 
 
         f.close()

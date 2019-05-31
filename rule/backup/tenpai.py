@@ -650,7 +650,7 @@ def old_tenpai_check(pai):
 def tenpai_check(pai):
     if find_shan_ten_table(pai, 13) > 0:
         return []
-
+        
     waiting_tile = []
     #pai.red_trans()
     pin = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -1489,8 +1489,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
                     yaku.han += 2
         #junchan
         junchan = True
-        if yaku.chi_toi:
-            jun_chan = False
         for i in copy_pai.chi_card:
             min_num = 50
             for j in range(0, 3):
@@ -1540,8 +1538,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
                 yaku.han += 2
         #chanta
         chanta = True
-        if yaku.chi_toi:
-            chanta = False
         for i in copy_pai.chi_card:
             min_num = 50
             for j in range(0, 3):
@@ -1631,10 +1627,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
         #chinroto
         if len(copy_pai.chi_card) == 0:
             chinroto = True
-            if yaku.chi_toi:
-                chinroto = False
-            if len(copy_pai.chi_card) != 0:
-                chinroto = False
             for i in copy_pai.pon_card:
                 if i[0] >= 30 or not (i[0] % 10 == 1 or i[0] % 10 == 9):
                     chinroto = False
@@ -1648,9 +1640,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
                     if i[0] >= 30 or not (i[0] % 10 == 1 or i[0] % 10 == 9):
                         chinroto = False
                         break
-                else :
-                    chinroto = False
-                    break
             if chinroto:
                 yaku.chin_ro_tou = True
                 yaku.han = 13
@@ -1668,8 +1657,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
         #tsuiso
         if len(copy_pai.chi_card) == 0:
             tsuiso = True
-            if yaku.chi_toi:
-                tsuiso = False
             for i in copy_pai.pon_card:
                 if i[0] < 30:
                     tsuiso = False
@@ -1688,8 +1675,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
                 yaku.yaku_nashi = False
         #ryuiro
         ryuiro = True
-        if yaku.chi_toi:
-            ryuiro = False
         for i in copy_pai.pon_card:
             if not (i[0] == 22 or i[0] == 23 or i[0] == 24 or i[0] == 26 or i[0] == 28 or i[0] == 35):
                 ryuiro = False
@@ -1757,8 +1742,6 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
                     else :
                         if k[i] < 1:
                             kyu = False
-            else :
-                kyu = False
             if kyu:
                 if last_pai % 10 == 1 or last_pai % 10 == 9:
                     if (last_pai % 10 == 1 and k[0] == 4) or (last_pai % 10 == 9 and k[8] == 4):
@@ -2064,15 +2047,8 @@ def find_shan_ten_table(pai, num = 13):
 
         return s
 
-def find_effective_table(arr):
-    result = effective_encoder(arr)
-
-    eff = effective_table.get(result)
-    if eff == None:
-        eff = effective_card(arr)
-        effective_table[result] = eff
-    
-    return eff
+def find_effective_table(pai):
+    pass
 
 def update_table():
     file_encoder('lookup_table_13.DAT', table_13, old_table_13_size)

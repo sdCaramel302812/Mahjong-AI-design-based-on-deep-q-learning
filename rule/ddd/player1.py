@@ -107,7 +107,7 @@ class Player:
                 self.info.tenpai_list = []
             self.info.what_to_tenpai = []
 
-            if self.info.want_to_richi == 1 and not self.card.richi:
+            if self.info.want_to_richi == 1:
                 self.card.richi = True
                 self.info.i_ba_tsu = True
                 self.info.want_to_richi = 0

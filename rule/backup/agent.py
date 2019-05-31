@@ -42,7 +42,7 @@ class Agent:#(threading.Thread):
 
     def want_to_ron(self):
         # . . .
-        return True
+        return False
 
     # return an kan case
     def want_to_ankan(self):
@@ -55,7 +55,7 @@ class Agent:#(threading.Thread):
 
     def which_to_discard(self):
         # . . .
-        return self.ai.choose_action(self.get_state(), self.card)
+        return self.ai.choose_action(self.get_state(), self.card.card14)
 
     def run(self):
         if True:
@@ -76,7 +76,7 @@ class Agent:#(threading.Thread):
                     # reward, next_state, s
                     self.ai.store_transition(self.calc_reward(), self.get_state(), self.card.old_s)
                 if self.info.can_richi:
-                    self.info.want_to_richi = self.want_to_richi()
+                    self.info.want_to_richi = want_to_richi()
                 if self.info.can_tsumo:
                     self.info.can_tsumo = False
                     if self.want_to_tsumo():
@@ -121,9 +121,7 @@ class Agent:#(threading.Thread):
 
     def get_state(self):
         arr = np.array([np.zeros(34)])
-        card = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         for i in self.card.check_card14:
-            card[int(i)] += 1
             if i >= 30:
                 arr[0][int(i) - 4] += 1
             elif i > 20:
@@ -132,7 +130,7 @@ class Agent:#(threading.Thread):
                 arr[0][int(i) - 2] += 1
             else :
                 arr[0][int(i) - 1] += 1
-        return [arr, card]
+        return arr
 
 
 

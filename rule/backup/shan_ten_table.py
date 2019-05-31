@@ -259,7 +259,7 @@ def shan_ten_check_13(pai, size):
                     c_rem -= 3
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
+                    if g + g1 > k or c_rem < s - c:
                         break
                 elif j < len(card) - 2 and card[j][1] == 0 and card[j + 1][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0 and card[j + 2][0] > 0:
                     card[j][0] -= 1
@@ -269,7 +269,7 @@ def shan_ten_check_13(pai, size):
                     c_rem -= 3
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
+                    if g + g1 > k or c_rem < s - c:
                         break
                 else :
                     j += 1
@@ -282,7 +282,7 @@ def shan_ten_check_13(pai, size):
                     c_rem -= 2
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
+                    if g + g1 > k or c_rem < s - c:
                         break
                 elif j < len(card) - 1 and card[j][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0:
                     card[j][0] -= 1
@@ -291,7 +291,7 @@ def shan_ten_check_13(pai, size):
                     c_rem -= 2
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
+                    if g + g1 > k or c_rem < s - c:
                         break
                 else :
                     j += 1
@@ -316,7 +316,7 @@ def shan_ten_check_13(pai, size):
             c_rem -= 3
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
+            if g + g1 > k or c_rem < s - c:
                 break
         elif j < len(card) - 2 and card[j][1] == 0 and card[j + 1][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0 and card[j + 2][0] > 0:
             card[j][0] -= 1
@@ -326,7 +326,7 @@ def shan_ten_check_13(pai, size):
             c_rem -= 3
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
+            if g + g1 > k or c_rem < s - c:
                 break
         else :
             j += 1
@@ -339,7 +339,7 @@ def shan_ten_check_13(pai, size):
             c_rem -= 2
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
+            if g + g1 > k or c_rem < s - c:
                 break
         elif j < len(card) - 1 and card[j][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0:
             card[j][0] -= 1
@@ -348,7 +348,7 @@ def shan_ten_check_13(pai, size):
             c_rem -= 2
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
+            if g + g1 > k or c_rem < s - c:
                 break
         else :
             j += 1
@@ -427,8 +427,7 @@ def shan_ten_check_14(pai, size):
                     c_rem -= 3
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
-                        s += 1
+                    if g + g1 > k or c_rem < s - c:
                         break
                 elif j < len(card) - 2 and card[j][1] == 0 and card[j + 1][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0 and card[j + 2][0] > 0:
                     card[j][0] -= 1
@@ -438,8 +437,7 @@ def shan_ten_check_14(pai, size):
                     c_rem -= 3
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
-                        s += 1
+                    if g + g1 > k or c_rem < s - c:
                         break
                 else :
                     j += 1
@@ -452,8 +450,7 @@ def shan_ten_check_14(pai, size):
                     c_rem -= 2
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
-                        s += 1
+                    if g + g1 > k or c_rem < s - c:
                         break
                 elif j < len(card) - 1 and card[j][1] != 2 and card[j][0] > 0 and card[j + 1][0] > 0:
                     card[j][0] -= 1
@@ -462,8 +459,7 @@ def shan_ten_check_14(pai, size):
                     c_rem -= 2
                     s = 2 * (k - g) - g1 - p
                     c = 3 * g + 2 * g1 + 2 * p
-                    if g + g1 > k:
-                        s += 1
+                    if g + g1 > k or c_rem < s - c:
                         break
                 else :
                     j += 1
@@ -488,8 +484,7 @@ def shan_ten_check_14(pai, size):
             c_rem -= 3
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
-                s += 1
+            if g + g1 > k or c_rem < s - c:
                 break
         elif j < len(card) - 2 and card[j][1] == 0 and card[j + 1][1] == 0 and card[j][0] > 0 and card[j + 1][0] > 0 and card[j + 2][0] > 0:
             card[j][0] -= 1
@@ -499,8 +494,7 @@ def shan_ten_check_14(pai, size):
             c_rem -= 3
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
-                s += 1
+            if g + g1 > k or c_rem < s - c:
                 break
         else :
             j += 1
@@ -513,8 +507,7 @@ def shan_ten_check_14(pai, size):
             c_rem -= 2
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
-                s += 1
+            if g + g1 > k or c_rem < s - c:
                 break
         elif j < len(card) - 1 and card[j][1] != 2 and card[j][0] > 0 and card[j + 1][0] > 0:
             card[j][0] -= 1
@@ -523,14 +516,11 @@ def shan_ten_check_14(pai, size):
             c_rem -= 2
             s = 2 * (k - g) - g1 - p
             c = 3 * g + 2 * g1 + 2 * p
-            if g + g1 > k:
-                s += 1
+            if g + g1 > k or c_rem < s - c:
                 break
         else :
             j += 1
 
-    if s < 0:
-        s = 0
     if min_s > s:
         min_s = s
 
@@ -624,7 +614,10 @@ def pattern_sort(pai):
     return new_pai
     
 
-def effective_card(card, third = False):
+def effective_card(pai, third = False):
+    card = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for i in pai.check_card13:
+        card[int(i)] += 1
     back_up = copy.copy(card)
     effective_list = []
 
@@ -885,7 +878,6 @@ def effective_encoder(arr):
     for i in arr:
         result <<= 3
         result |= i
-    return result
 
 def effective_file_encoder(file_name, table, start_point = None):
     if start_point == None:
@@ -906,7 +898,7 @@ def effective_file_decoder(file_name, table):
         i_2 = int.from_bytes(f.read(2), 'big')
         if i_1 is 0 and i_2 is 0:
             break
-        table[i_1] = i_2 
+        table[i_1] = i_2
     f.close()
 
 def create_table_13(iter_time, n):

@@ -9,6 +9,8 @@ from keras.optimizers import SGD, Adam, RMSprop
 import tensorflow as tf
 import copy
 import random
+from rule.tenpai import find_effective_table, find_shan_ten_table
+import time
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
@@ -29,12 +31,12 @@ class DeepQNetwork:
 
         if new_model:
             opt = RMSprop(lr=learning_rate, rho=0.9, epsilon=1e-08, decay=0.0)
-            self.eval_model = Sequential([Dense(middle_dim, input_dim = in_dim), Activation('relu'), Dense(out_dim), Activation('softmax')])
+            self.eval_model = Sequential([Dense(middle_dim, input_dim = in_dim), Activation('relu'), Dense(64), Activation('relu'), Dense(out_dim), Activation('softmax')])
             self.eval_model.compile(loss='categorical_crossentropy',
                 optimizer=opt,
                 metrics=['accuracy'])
 
-            self.target_model = Sequential([Dense(middle_dim, input_dim = in_dim), Activation('relu'), Dense(out_dim), Activation('softmax')])
+            self.target_model = Sequential([Dense(middle_dim, input_dim = in_dim), Activation('relu'), Dense(64), Activation('relu'), Dense(out_dim), Activation('softmax')])
             self.target_model.compile(loss='categorical_crossentropy',
                 optimizer=opt,
                 metrics=['accuracy'])
@@ -47,19 +49,48 @@ class DeepQNetwork:
         self.trasition = []
         self.start_k = 0
 
-    def choose_action(self, state, card14):
-        decide_q = self.target_model.predict(state)
+    def choose_action(self, state, card):
+        #decide_q = self.target_model.predict(state[0])
+        s = find_shan_ten_table(card, 14)
+        back_up = copy.deepcopy(card)
+        choose_table = {}
+
+        for i in range(1, 37):
+            if state[1][i] > 0:
+                back_up.discard(i)
+                next_s = find_shan_ten_table(back_up)
+                if next_s == s:
+                    state[1][i] -= 1
+                    choose_table[i] = find_effective_table(state[1])
+                    state[1][i] += 1
+                back_up.draw(i)
+        
+        max_number = 0
+        max_index = 0
+        has_find_action = False
+        for key, value in choose_table.items():
+            if value > max_number:
+                has_find_action = True
+                max_number = value
+                max_index = key
+        if has_find_action:
+            return max_index
+        else :
+            return card.card14[-1]
+
+        '''
         self.old_state = state
         if np.random.uniform() < self.epsilon:
-            rd = random.randint(0, len(card14) - 1)
-            return card14[rd]
+            rd = random.randint(0, len(card.card14) - 1)
+            return card.card14[rd]
         else :
             while True:
                 self.action = np.argmax(decide_q[0])
-                if self.action in card14:
+                if self.action in card.card14:
                     return self.action
                 else :
                     decide_q[0][self.action] = 0
+        '''
 
     # s : 向聽數
     def store_transition(self, reward, next_state, s):
@@ -87,6 +118,8 @@ class DeepQNetwork:
             if len(next_state) != 0:
                 Q_sa = self.target_model.predict(next_state)
                 targets[i, action] = reward + self.gamma * np.max(Q_sa[0])
+            else :
+                targets[i, action] = reward
 
             self.eval_model.fit(inputs, targets, epochs=self.epoch, batch_size=self.batch_size)
 

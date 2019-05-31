@@ -223,11 +223,10 @@ class Game:
                 self.final_card[self.winner2].append([self.winning_tile])
 
 
-        self.game_log.append_game_log(self.chan_fon, self.oya, self.kyouku, self.honba, self.kyoutaku, self.card_stack.get_dora(), self.card_stack.get_uradora(), self.start_deal, self.draw_stack, self.discard_stack, self.final_card, self.winner, [self.pl[0].info.point, self.pl[1].info.point, self.pl[2].info.point, self.pl[3].info.point])
-        
+        self.game_log.append_game_log(self.chan_fon, self.oya, self.kyouku, self.honba, self.kyoutaku, self.card_stack.get_dora(), self.card_stack.get_uradora(), self.start_deal, self.draw_stack, self.discard_stack, self.final_card)
 
 
-    not_end = True
+    end = True
     def run(self):
         self.not_end = True
         if True:
@@ -296,9 +295,9 @@ class Game:
                 elif self.discard_tile != -1:
                     if self.pl[self.current_player].card.richi:
                         self.richi_list[self.current_player] = 1
-                        if sum(self.richi_list) > self.richi_number:
+                        if sum(self.richi_list > self.richi_number):
                             self.richi_number += 1
-                            self.kyoutaku += 1
+                            self.kyoutaku += 1000
                     self.discard_stack[self.current_player].append(self.discard_tile)
                     wait = self.check_action(self.discard_tile)
                     if wait:
@@ -442,35 +441,25 @@ class Game:
             if self.waiting_state == 3:
                 # if some body win
                 if self.winner != -1:
-                    point = point_check(self.pl[self.winner].card, self.chan_fon, self.pl[self.winner].info.men_fon, self.pl[self.winner].info.last, self.pl[self.winner].info.first, self.pl[self.winner].info.rin_shan, self.pl[self.winner].info.chan_kan, self.pl[self.winner].info.i_ba_tsu, self.red_number, self.card_stack.get_dora(), self.card_stack.get_uradora())
+                    point = point_check(self.pl[self.winner].card, self.chan_fon, self.pl[self.winner].info.men_fon, self.pl[self.winner].info.last, self.pl[self.winner].info.first, self.pl[self.winner].info.rin_shan, self.pl[self.winner].info.chan_kan, self.pl[self.winner].info.i_ba_tsu, self.red_number, self.card_stack.get_dora, self.card_stack.get_uradora)
                     self.pl[self.winner].info.update_reward = True
                     self.pl[self.winner].info.reward = point.point
-
+                    print(point.point)
                     if self.is_tsumo:
-                        if self.pl[self.winner].info.men_fon == 30:
-                            point.get_point(True, True)
-                            self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
-                        else :
-                            point.get_point(False, True)
-                            self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
+                        self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
                         for i in range(0, 3):
                             if self.pl[self.winner].info.men_fon == 30:
                                 self.pl[self.find_next_player(i + 1)].info.point -= point.point / 3 + 100 * self.honba
                             else :
                                 if self.pl[self.find_next_player(i + 1)].info.men_fon == 30:
-                                    self.pl[self.find_next_player(i + 1)].info.point -= point.get_point(False, True)[1] + 100 * self.honba
+                                    self.pl[self.find_next_player(i + 1)].info.point -= point.point / 2 + 100 * self.honba
                                 else :
-                                    self.pl[self.find_next_player(i + 1)].info.point -= point.get_point(False, True)[0] + 100 * self.honba
+                                    self.pl[self.find_next_player(i + 1)].info.point -= point.point / 4 + 100 * self.honba
                     else :
-                        if self.pl[self.winner].info.men_fon == 30:
-                            point.get_point(True, False)
-                        else :
-                            point.get_point(False, False)
                         self.pl[self.winner].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
                         self.pl[self.loser].info.point -= point.point + 300 * self.honba
-                    '''
                     if self.winner2 != -1:
-                        point = point_check(self.pl[self.winner2].card, self.chan_fon, self.pl[self.winner2].info.men_fon, self.pl[self.winner2].info.last, self.pl[self.winner2].info.first, self.pl[self.winner2].info.rin_shan, self.pl[self.winner2].info.chan_kan, self.pl[self.winner2].info.i_ba_tsu, self.red_number, self.card_stack.get_dora(), self.card_stack.get_uradora())
+                        point = point_check(self.pl[self.winner2].card, self.chan_fon, self.pl[self.winner2].info.men_fon, self.pl[self.winner2].info.last, self.pl[self.winner2].info.first, self.pl[self.winner2].info.rin_shan, self.pl[self.winner2].info.chan_kan, self.pl[self.winner2].info.i_ba_tsu, self.red_number, self.card_stack.get_dora, self.card_stack.get_uradora)
                         self.pl[self.winner2].info.update_reward = True
                         self.pl[self.winner2].info.reward = point.point
                         if self.is_tsumo:
@@ -486,9 +475,7 @@ class Game:
                         else :
                             self.pl[self.winner2].info.point += point.point + 300 * self.honba + 1000 * self.kyoutaku
                             self.pl[self.loser].info.point -= point.point + 300 * self.honba
-                    '''
                     self.kyoutaku = 0
-                    point.print_yaku()
 
                 else :
                     ten = [0, 0, 0, 0]
@@ -499,27 +486,21 @@ class Game:
                     if ten_num == 1:
                         for i in range(0, 4):
                             if ten[i] == 1:
-                                pass
-                            #    self.pl[i].info.point += 3000
+                                self.pl[i].info.point += 3000
                             else :
-                                pass
-                            #    self.pl[i].info.point -= 1000
+                                self.pl[i].info.point -= 1000
                     elif ten_num == 2:
                         for i in range(0, 4):
                             if ten[i] == 1:
-                                pass
-                            #    self.pl[i].info.point += 1500
+                                self.pl[i].info.point += 1500
                             else :
-                                pass
-                            #    self.pl[i].info.point -= 1500
+                                self.pl[i].info.point -= 1500
                     elif ten_num == 3:
                         for i in range(0, 4):
                             if ten[i] == 1:
-                                pass
-                            #    self.pl[i].info.point += 1000
+                                self.pl[i].info.point += 1000
                             else :
-                                pass
-                            #    self.pl[i].info.point -= 3000
+                                self.pl[i].info.point -= 3000
 
 
                 self.record_game_log()
@@ -538,7 +519,7 @@ class Game:
                 #    print(self.discard_stack[i])
                 #    print(self.final_card[i], '\t', self.pl[i].card.kan_card)
                 #    print(' ')
-                #self.not_end = False
+                #self.end = False
                 #for i in self.pl:
                 #    i.info.end_game = True
 
@@ -567,14 +548,14 @@ if __name__ == '__main__':
 
 
 
-    start = time.time()
+    start_time = time.time()
 
     #game.start()
     #for i in agent:
     #    i.start()
 
     round_count = 0
-    while game.end:
+    while game.not_end:
         round_count += game.run()
         for i in range(0, 4):
             agent[i].run()
@@ -586,10 +567,10 @@ if __name__ == '__main__':
     #for i in agent:
     #    i.join()
 
-    end = time.time()
+    end_time = time.time()
     update_table()
 
-    print('elapse time ', end - start)
+    print('elapse time ', end_time - start_time)
     print('total ', round_count)
 
     print(agent[0].card.card13)
