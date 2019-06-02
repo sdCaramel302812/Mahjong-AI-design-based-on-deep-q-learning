@@ -15,18 +15,23 @@ from keras.datasets import mnist
 
 
 # data pre-processing
+print(np.array([1, 1, 1, 1, 1]).shape)
 X_train = X_train.reshape(X_train.shape[0], -1) / 255.   # normalize
 X_test = X_test.reshape(X_test.shape[0], -1) / 255.      # normalize
 y_train = np_utils.to_categorical(y_train, num_classes=10)
 y_test = np_utils.to_categorical(y_test, num_classes=10)
 
-print(X_train[1].shape)
+print(X_train[0].shape)
 """
 (784,)
 """
 
-print(X_train[0])
-print(y_train[0])
+ttt = [0, 0, 0, 0]
+for i in ttt:
+    i = 1
+
+print(ttt)
+
 
 # Another way to build your neural net
 model = Sequential([

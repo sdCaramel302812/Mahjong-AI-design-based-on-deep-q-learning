@@ -1,6 +1,9 @@
 import numpy as np
 
 class PlayerInfo:
+    # for ai update reward
+    i_win = False
+
     want_to_richi = 0
     want_to_tsumo = False
 

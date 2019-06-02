@@ -1057,6 +1057,7 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
 
         if chi_toi_check(copy_pai):
             chi_toi = True
+            yaku.chi_toi = True
 
         for i in range(0, len(mentsu)):
             if mentsu[i][0] == mentsu[i][1]:
@@ -1490,7 +1491,7 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
         #junchan
         junchan = True
         if yaku.chi_toi:
-            jun_chan = False
+            junchan = False
         for i in copy_pai.chi_card:
             min_num = 50
             for j in range(0, 3):
@@ -1541,6 +1542,8 @@ def point_check(pai, chanfon, menfon, last, first, rinshan, chankan, ibatsu, aka
         #chanta
         chanta = True
         if yaku.chi_toi:
+            chanta = False
+        if not (pair % 10 == 1 or pair % 10 == 9 or pair >= 30):
             chanta = False
         for i in copy_pai.chi_card:
             min_num = 50

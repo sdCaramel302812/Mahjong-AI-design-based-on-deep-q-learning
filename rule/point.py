@@ -158,8 +158,12 @@ class Point:
     uradora = 0
 
     def get_point(self, oya, tsumo):
+        if self.fu <= 20:
+            self.fu = 30
         if self.han >= 5:
             self.fu = 30
+        if self.han > 13:
+            self.han = 13
         han = self.han
         fu = self.fu
         if (self.han == 4 and self.fu > 30) or (self.han == 3 and self.fu > 60):

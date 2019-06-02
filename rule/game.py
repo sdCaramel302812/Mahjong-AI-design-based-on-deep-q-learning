@@ -440,10 +440,16 @@ class Game:
 
                     self.waiting_state = 0
             if self.waiting_state == 3:
+                self.pl[0].info.update_reward = True
+                self.pl[1].info.update_reward = True
+                self.pl[2].info.update_reward = True
+                self.pl[3].info.update_reward = True
+
+
                 # if some body win
                 if self.winner != -1:
                     point = point_check(self.pl[self.winner].card, self.chan_fon, self.pl[self.winner].info.men_fon, self.pl[self.winner].info.last, self.pl[self.winner].info.first, self.pl[self.winner].info.rin_shan, self.pl[self.winner].info.chan_kan, self.pl[self.winner].info.i_ba_tsu, self.red_number, self.card_stack.get_dora(), self.card_stack.get_uradora())
-                    self.pl[self.winner].info.update_reward = True
+                    self.pl[self.winner].info.i_win = True
                     self.pl[self.winner].info.reward = point.point
 
                     if self.is_tsumo:
